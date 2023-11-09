@@ -2,10 +2,14 @@
 
 * oauth2 oidc(keycloak) login
 * keycloak authentication jwt filter for bearer token requests(resource server),
-* user info/claims from token,in memory db,sl4j,
+* user info/claims from token
 * thymeleaf pages 
 * custom jwt converter for fetching realm roles
-*in memory db for testing
+* in memory db for testing
+* kafka exchanging json messages
+* docker-compose yaml for running newer version of zookeeper/kafka broker for JSON serialization support
+
+
 ## Authorization server info(keycloak)
 
 local docker image container from  **quay.io/keycloak/keycloak:22.0.5**
@@ -24,5 +28,31 @@ running on http://localhost:8080
 ## send request with retrieved token example GET:
 
 `curl --location 'http://localhost:8081/customers' \
---header 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICItRzZ1M25ub2tQTGQ3YVpMQTNlTDRlQXlEc1RrTjE2QndKZXpqdEtKNElzIn0.eyJleHAiOjE2OTkzNDU2MTUsImlhdCI6MTY5OTM0NTMxNSwianRpIjoiY2IzYTA0YTEtNWY1Yy00MDgyLThhZGUtZGE4MjBkOTdjNGM3IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9TcHJpbmdCb290S2V5Y2xvYWsiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiZGNhMGY2ZmItNGI1OS00ZjAxLTg2YmEtMDk0NDIzMjQxZmU2IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibG9naW4tYXBwIiwic2Vzc2lvbl9zdGF0ZSI6IjJlNTI0NmQ4LTFkMjItNGI3Zi04MjJmLTk3OWQwYWZkMmIwNCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsImRlZmF1bHQtcm9sZXMtc3ByaW5nYm9vdGtleWNsb2FrIiwidW1hX2F1dGhvcml6YXRpb24iLCJ1c2VyIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwic2lkIjoiMmU1MjQ2ZDgtMWQyMi00YjdmLTgyMmYtOTc5ZDBhZmQyYjA0IiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJuYW1lIjoiQW5hc3Rhc2lvcyBLYWxhbWF0YXMiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ1c2VyMSIsImdpdmVuX25hbWUiOiJBbmFzdGFzaW9zIiwiZmFtaWx5X25hbWUiOiJLYWxhbWF0YXMiLCJlbWFpbCI6ImFuYXN0YXNpb3Mua2FsYW1hdGFzQHN3b3JkLWdyb3VwLmNvbSJ9.GMGquWJrfPM7zenwUiU_3GW1YAmDKwO11m_PeII7bl0UAsM3p_c2xXRzGtMNEFTQWzBsqAJ5H9-6B9LCjZNlqV_4oS3-6ZqBMKbhDVEyUfRPQDz1-j6kR_tt1RzBJ_dl9uxqr9CtBiqYEGt_ficz5Bb32PY8-RQLS9vqtDzKbteGOhufSMNiKE_gaXvynxqSsYJTU3zk41KC6oz6hFmxtZHWiCA83ylkFg7W3nbz_raF2L5O2aO9UYj6ZyIT86guBQFtuQ4pYugqgO-3NpnnJcVAizPgPKjT5GjmP6iBRQITJqEbI5nTiOpDmJGSj8vB0nLrGh7ZtsQatucu-xKu1Q' \
+--header 'Authorization: Bearer  <jwt access token>\
 --header 'Cookie: JSESSIONID=D84539D9C12AD9BC48F9D1297751365D'`
+
+
+## kafka consume/produce from docker cluster
+ 
+Added latest kafka broker by adding docker-compose.yaml that installs zookeper and kafka in a docker cluster:
+in same folder where **docker-compose.yaml** is:
+`$ docker-compose up -d`
+Additionally, we can also check the verbose logs while the containers are starting up and verify that the Kafka server is up:
+`$ docker-compose logs kafka | grep -i started`
+use the Kafka Tool GUI utility to establish a connection with our newly created Kafka server, and later, we’ll visualize this setup:
+**Offset Explorer**
+We must note that we need to use the Bootstrap servers property to connect to the Kafka server listening at port 29092 for the host machine.
+
+Finally, we should be able to visualize the connection on the left sidebar:
+You can produce json kafka messages by running the endpoint:
+`curl --location 'http://localhost:8081/kafka-produce' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer  <jwt access token>\
+--header 'Cookie: JSESSIONID=47E9532C6E46290CE764AE7D173DB13F' \
+--data '{
+"key":"test2",
+"value":"test2V"
+}'`
+Have in mind that the endpoint requires keycloak authentication
+##older kafka brokers do not support headers needed for JSON serializers/deserializers such as spotify/kafka docker image.
+(Json Serializers pass headers such as _TypeId_ ,older kafka brokers throw 'Magic v1 do not support headers')

@@ -85,7 +85,7 @@ public class customerController {
     @PostMapping("/kafka-produce")
     public String produceKafkaMessage(@RequestBody KafkaMessageDTO msg)
     {
-        kafkaProducerService.produce(msg.toString());
+        kafkaProducerService.produce(msg);
         return "redirect:/";
     }
 }
