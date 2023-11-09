@@ -2,6 +2,18 @@ server:
   port: 8081
 
 spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      retries: 0
+      acks: all
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      group-id: foo
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
   security:
     oauth2:
       client:
@@ -23,3 +35,11 @@ logging:
       example:
         demo:
           rest: debug
+
+app:
+  kafka:
+    producer:
+      topic: test_dev
+    consumer:
+      topic: test_dev
+

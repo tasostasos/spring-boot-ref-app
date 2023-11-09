@@ -1,7 +1,9 @@
 package com.example.demo.rest;
 
+import com.example.demo.dto.KafkaMessageDTO;
 import com.example.demo.entity.Customer;
 import com.example.demo.dao.CustomerDAO;
+import com.example.demo.kafka.KafkaProducerService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,8 @@ import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.security.Principal;
 import java.util.Map;
@@ -18,6 +22,9 @@ import java.util.Map;
 @Controller
 @Slf4j
 public class customerController {
+
+    @Autowired
+    private KafkaProducerService kafkaProducerService;
 
     @Autowired
     private CustomerDAO customerDAO;
@@ -72,5 +79,13 @@ public class customerController {
         customerDAO.save(customer3);
 
         return true;
+    }
+
+
+    @PostMapping("/kafka-produce")
+    public String produceKafkaMessage(@RequestBody KafkaMessageDTO msg)
+    {
+        kafkaProducerService.produce(msg.toString());
+        return "redirect:/";
     }
 }
