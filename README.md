@@ -1,10 +1,9 @@
 # Spring Boot demo Oauth2 Project
 
 * oauth2 oidc(keycloak) login
-* keycloak authentication jwt filter for bearer token requests(resource server),
-* user info/claims from token
-* thymeleaf pages 
+* keycloak authentication via bearer token requests
 * custom jwt converter for fetching realm roles
+* user info/claims from token
 * in memory db for testing
 * kafka exchanging json messages
 * docker-compose yaml for running newer version of zookeeper/kafka broker for JSON serialization support
@@ -31,6 +30,9 @@ running on http://localhost:8080
 --header 'Authorization: Bearer  <jwt access token>\
 --header 'Cookie: JSESSIONID=D84539D9C12AD9BC48F9D1297751365D'`
 
+## authenticated requests to keycloak REST api
+KeycloakRestApiController uses RestTemplate with KeycloakInterceptor that gets an access token for admin-cli client,
+authenticates via bearer token to keycloak admin and fetches the REST api info
 
 ## kafka consume/produce from docker cluster
  

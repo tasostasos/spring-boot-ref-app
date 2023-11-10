@@ -7,11 +7,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-public class RestTemplateConfig {
+public class KeycloakRestTemplateConfig {
+    @Autowired
+    KeycloakInterceptor keycloakInterceptor;
 
     @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
+    public RestTemplate keycloakRestTemplate() {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getInterceptors().add(keycloakInterceptor);
+        return restTemplate;
     }
-
 }

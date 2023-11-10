@@ -44,4 +44,11 @@ app:
       topic: test_dev
     consumer:
       topic: test_dev
+  keycloak:
+    open-id-connect: http://localhost:8080/realms/master/protocol/openid-connect/token
+    open-id-connect-username: admin
+    open-id-connect-password: admin
+    open-id-connect-client-id: admin-cli
+    rest-endpoint: http://localhost:8080/admin/realms/SpringBootKeycloak/
+
 
