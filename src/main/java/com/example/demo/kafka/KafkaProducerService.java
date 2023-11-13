@@ -7,6 +7,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+/**
+ * Producer for kafka topic configured in application.yaml.
+ *
+ */
 @Service
 @Slf4j
 public class KafkaProducerService {

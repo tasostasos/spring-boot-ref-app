@@ -19,6 +19,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.security.Principal;
 import java.util.Map;
 
+/**
+ * Customer controller ,open for / url,keycloak authenticated for all other endpoints.
+ * Uses Thymeleaf templates for response rendering.
+ */
 @Controller
 @Slf4j
 public class customerController {

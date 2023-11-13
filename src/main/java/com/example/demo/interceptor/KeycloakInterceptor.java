@@ -15,6 +15,10 @@ import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 import java.util.Map;
 
+/**
+ * Interceptor for fetching admin0-cli access token for api calls to keycloak REST API.Adds token to
+ * {@link RestTemplate} requests as Authorization header(Bearer token).
+ */
 @Component
 public class KeycloakInterceptor implements ClientHttpRequestInterceptor {
 

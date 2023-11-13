@@ -1,3 +1,4 @@
+#docker cluster file for kafka broker+zookeeper
 version: '2'
 services:
   zookeeper:

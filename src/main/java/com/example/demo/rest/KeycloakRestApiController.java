@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * controller for forwarding authorized api calls to keycloak REST API.
+ */
 @RestController
 @RequestMapping("keycloak")
 @RequiredArgsConstructor
