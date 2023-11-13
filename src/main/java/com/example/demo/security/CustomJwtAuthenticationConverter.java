@@ -14,10 +14,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * retrieves realm roles from jwt token and adds them as granted authorities with prefix ROLE_ .
+ * (default behavior retrieves roles from 'scope' attribute of jwt token)
+ */
 public class CustomJwtAuthenticationConverter implements Converter<Jwt, AbstractAuthenticationToken> {
     private static Collection<? extends GrantedAuthority> extractRealmRoles(final Jwt jwt) {
         Map<String, Object> realmAccess = jwt.getClaim("realm_access");
-        if (realmAccess != null &&  realmAccess.get("roles") != null)
+        if (realmAccess != null && realmAccess.get("roles") != null)
             return ((Collection<String>) realmAccess.get("roles")).stream()
                     .map(x -> new SimpleGrantedAuthority("ROLE_" + x.toUpperCase()))
                     .collect(Collectors.toSet());

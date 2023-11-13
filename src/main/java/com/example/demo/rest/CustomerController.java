@@ -2,7 +2,7 @@ package com.example.demo.rest;
 
 import com.example.demo.dto.KafkaMessageDTO;
 import com.example.demo.entity.Customer;
-import com.example.demo.dao.CustomerDAO;
+import com.example.demo.repository.CustomerRepository;
 import com.example.demo.kafka.KafkaProducerService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -26,13 +26,13 @@ import java.util.Map;
  */
 @Controller
 @Slf4j
-public class customerController {
+public class CustomerController {
 
     @Autowired
     private KafkaProducerService kafkaProducerService;
 
     @Autowired
-    private CustomerDAO customerDAO;
+    private CustomerRepository customerRepository;
 
     @GetMapping(path = "/")
     public String index() {
@@ -61,7 +61,7 @@ public class customerController {
         Map<String, Object> customClaims = token.getClaims();
 
         addCustomers();
-        model.addAttribute("customers", customerDAO.findAll());
+        model.addAttribute("customers", customerRepository.findAll());
         model.addAttribute("username", customClaims.get("given_name"));
         return "customers";
     }
@@ -79,33 +79,33 @@ public class customerController {
         Map<String, Object> customClaims = user.getClaims();
 
         addCustomers();
-        model.addAttribute("customers", customerDAO.findAll());
+        model.addAttribute("customers", customerRepository.findAll());
         model.addAttribute("username", customClaims.get("given_name"));
         return "customers";
     }
 
     // add customers for demonstration
     public boolean addCustomers() {
-        if (customerDAO.count() != 0)
+        if (customerRepository.count() != 0)
             return false;
 
         Customer customer1 = new Customer();
         customer1.setAddress("1111 foo blvd");
         customer1.setName("Foo Industries");
         customer1.setServiceRendered("Important services");
-        customerDAO.save(customer1);
+        customerRepository.save(customer1);
 
         Customer customer2 = new Customer();
         customer2.setAddress("2222 bar street");
         customer2.setName("Bar LLP");
         customer2.setServiceRendered("Important services");
-        customerDAO.save(customer2);
+        customerRepository.save(customer2);
 
         Customer customer3 = new Customer();
         customer3.setAddress("33 main street");
         customer3.setName("Big LLC");
         customer3.setServiceRendered("Important services");
-        customerDAO.save(customer3);
+        customerRepository.save(customer3);
 
         return true;
     }

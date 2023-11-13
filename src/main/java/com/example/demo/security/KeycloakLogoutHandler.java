@@ -14,7 +14,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 
-
+/**
+ * Logout functionality for thymeleaf based front end pages.Added in {@link SecurityConfig}
+ */
 @Component
 public class KeycloakLogoutHandler implements LogoutHandler {
 
@@ -40,7 +42,7 @@ public class KeycloakLogoutHandler implements LogoutHandler {
         ResponseEntity<String> logoutResponse = restTemplate.getForEntity(
                 builder.toUriString(), String.class);
         if (logoutResponse.getStatusCode().is2xxSuccessful()) {
-            logger.info("Successfulley logged out from Keycloak");
+            logger.info("Successfully logged out from Keycloak");
         } else {
             logger.error("Could not propagate logout to Keycloak");
         }

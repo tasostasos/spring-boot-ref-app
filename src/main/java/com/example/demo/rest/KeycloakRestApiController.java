@@ -24,7 +24,7 @@ public class KeycloakRestApiController {
     private String keycloakRestUrl;
 
     @GetMapping("/{endpoint}")
-    public ResponseEntity<User[]> get(@PathVariable String endpoint) {
+    public ResponseEntity<User[]> getUserInfo(@PathVariable String endpoint) {
         ResponseEntity<User[]> response = keycloakRestTemplate.getForEntity(keycloakRestUrl + endpoint, User[].class);
         return response;
     }
