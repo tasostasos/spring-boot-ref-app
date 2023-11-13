@@ -20,7 +20,7 @@ import java.util.Map;
  * {@link RestTemplate} requests as Authorization header(Bearer token).
  */
 @Component
-public class KeycloakInterceptor implements ClientHttpRequestInterceptor {
+public class KeycloakAdminCliInterceptor implements ClientHttpRequestInterceptor {
 
     @Autowired
     RestTemplate restTemplate;

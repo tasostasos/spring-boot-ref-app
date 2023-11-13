@@ -1,4 +1,4 @@
-# Spring Boot demo Oauth2 Project
+# Spring Boot reference app: Oauth2 ,kafka
 
 * oauth2 oidc(keycloak) login
 * keycloak authentication via bearer token requests
@@ -13,6 +13,16 @@
 
 local docker image container from  **quay.io/keycloak/keycloak:22.0.5**
 running on http://localhost:8080
+to start a container:
+`docker run -p 8080:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:22.0.5 start-dev`
+to create keycloak realms/roles/users:
+* login to  http://localhost:8080 with admin credentials
+* Create realm SpringBootKeycloak
+* select created realm
+* create client with client-id:login-app,valid-redirect-uris:http://localhost:8081/*
+* create realm role: user
+* go to the Users page and add one:username : user1 ,first name,last name,credentials->set password  
+ ,role mappings->assign role user
 
 ## fetch token from keycloak admin POST
 

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,6 +46,13 @@ public class customerController {
         return "redirect:/";
     }
 
+    /**
+     * Authenticated via From oidc login page -Principal is {@link DefaultOidcUser}
+     *
+     * @param principal
+     * @param model
+     * @return
+     */
     @GetMapping(path = "/customers")
     public String customers(Principal principal, Model model) {
         final DefaultOidcUser user = (DefaultOidcUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -58,6 +66,23 @@ public class customerController {
         return "customers";
     }
 
+    /**
+     * Authenticated viaFrom Jwt Bearer authentication token -Principal is {@link Jwt}
+     *
+     * @param principal
+     * @param model
+     * @return
+     */
+    @GetMapping(path = "/customers-jwt")
+    public String customersJwt(Principal principal, Model model) {
+        Jwt user = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Map<String, Object> customClaims = user.getClaims();
+
+        addCustomers();
+        model.addAttribute("customers", customerDAO.findAll());
+        model.addAttribute("username", customClaims.get("given_name"));
+        return "customers";
+    }
 
     // add customers for demonstration
     public boolean addCustomers() {
@@ -87,8 +112,7 @@ public class customerController {
 
 
     @PostMapping("/kafka-produce")
-    public String produceKafkaMessage(@RequestBody KafkaMessageDTO msg)
-    {
+    public String produceKafkaMessage(@RequestBody KafkaMessageDTO msg) {
         kafkaProducerService.produce(msg);
         return "redirect:/";
     }
