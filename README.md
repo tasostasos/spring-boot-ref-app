@@ -1,20 +1,24 @@
 # Spring Boot reference app: Oauth2 ,kafka
 
-* oauth2 oidc(keycloak) login
-* keycloak authentication via bearer token requests
-* custom jwt converter for fetching realm roles
-* user info/claims from token
-* in memory db for testing
-* kafka exchanging json messages
-* docker-compose yaml for running newer version of zookeeper/kafka broker for JSON serialization support
+* enabled oauth2 oidc(keycloak) login for thymeleaf pages
+* Controller with keycloak authentication enabled via bearer access token
+* Custom jwt converter for using realm roles .
+* Controller for sending authorized calls to keycloak REST API(via interceptor,using admin access token)
+* in memory db for test data
+* kafka consumer/producer for exchanging json messages
+* Controller for kafka producing
+* docker-compose yaml for running newest version of zookeeper/kafka broker-JSON serialization/deserialization support
+* junit tests
+* postman collection with required endpoints
 
 
 ## Authorization server info(keycloak)
 
-local docker image container from  **quay.io/keycloak/keycloak:22.0.5**
-running on http://localhost:8080
+Pulled docker image from  **quay.io/keycloak/keycloak:22.0.5**
 to start a container:
 `docker run -p 8080:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:22.0.5 start-dev`
+running on http://localhost:8080
+
 to create keycloak realms/roles/users:
 * login to  http://localhost:8080 with admin credentials
 * Create realm SpringBootKeycloak
@@ -46,8 +50,8 @@ authenticates via bearer token to keycloak admin and fetches the REST api info
 
 ## kafka consume/produce from docker cluster
  
-Added latest kafka broker by adding docker-compose.yaml that installs zookeper and kafka in a docker cluster:
-in same folder where **docker-compose.yaml** is:
+Added latest kafka broker by adding docker-compose.yaml that installs zookeeper and kafka in a docker cluster:
+To create and start a docker container,run in same folder where **docker-compose.yaml** is:
 `$ docker-compose up -d`
 Additionally, we can also check the verbose logs while the containers are starting up and verify that the Kafka server is up:
 `$ docker-compose logs kafka | grep -i started`
@@ -68,3 +72,5 @@ You can produce json kafka messages by running the endpoint:
 Have in mind that the endpoint requires keycloak authentication
 ##older kafka brokers do not support headers needed for JSON serializers/deserializers such as spotify/kafka docker image.
 (Json Serializers pass headers such as _TypeId_ ,older kafka brokers throw 'Magic v1 do not support headers')
+
+All required endpoints for testing the application are in src/main/resources/postman/endpoints.json (import in postman)

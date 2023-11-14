@@ -4,7 +4,7 @@ import java.util.List;
 import lombok.Data;
 
 /**
- *to for keycloak REST API's /user response.(Endpoint returns an array of users)
+ *DTO for keycloak REST API's /user response.(Endpoint returns an array of users)
  *
  */
 @Data

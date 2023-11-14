@@ -14,7 +14,11 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
  * Security config for authenicating /customers/* endpoint with ROLE_USER(user realm role) and OIDC_USER(authentication
- * via login page for user role) authorizatio.Any other request authentication
+ * via login page for user role) .
+ * Permits unauthenticated root url.
+ * Requires authentication for all other requests via oauth2-keycloak .
+ * Enables keycloak login for authentication.
+ * Adds oAuth2 filter for jwt Bearer token authentication.
  */
 @Configuration
 @EnableWebSecurity//(debug = true)
@@ -24,7 +28,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain clientFilterChain(HttpSecurity http) throws Exception {
-        //permit unauthenticatedd root url
+        //permit unauthenticated root url
         http.authorizeRequests()
                 .requestMatchers(new AntPathRequestMatcher("/"))
                 .permitAll();

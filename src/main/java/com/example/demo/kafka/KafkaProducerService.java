@@ -8,7 +8,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 /**
- * Producer for kafka topic configured in application.yaml.
+ * Producer for kafka topic , configured in application.yaml.
  *
  */
 @Service

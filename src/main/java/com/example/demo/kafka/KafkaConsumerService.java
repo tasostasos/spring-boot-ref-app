@@ -7,7 +7,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
 /**
- * Consumer for kafka topic configured in application.yaml
+ * Consumer for kafka topic , configured in application.yaml
  *
  */
 @Service

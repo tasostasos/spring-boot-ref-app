@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * RestTemplate gor general usage
+ * RestTemplate gor general usage.
  */
 @Configuration
 public class RestTemplateConfig {
