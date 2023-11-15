@@ -13,7 +13,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 /**
  * Security config for authenticating /customers/* endpoint with ROLE_USER(user realm role) and OIDC_USER(authentication
  * via login page for user role) .
- * Permits unauthenticated root url.
+ * Permits unauthenticated root url,swagger endpoints.
  * authenticating /keycloak/* endpoint with ROLE_ADMIN
  * Requires authentication for all other requests via oauth2-keycloak .
  * Enables keycloak login for authentication.
@@ -30,7 +30,10 @@ public class SecurityConfig {
 
         //authenticate via oauth2-keycloak all requests
         http.authorizeRequests()
-                .requestMatchers(new AntPathRequestMatcher("/"))
+                .requestMatchers(new AntPathRequestMatcher("/"),
+                        new AntPathRequestMatcher("/v3/api-docs/**"),
+                        new AntPathRequestMatcher("/swagger-ui/**"),
+                        new AntPathRequestMatcher("/"))
                 .permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/customers**"))
                 .hasAnyAuthority("ROLE_USER", "OIDC_USER")

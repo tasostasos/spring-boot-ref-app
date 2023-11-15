@@ -30,9 +30,9 @@ class KeycloakRestApiControllerTest {
     public void getUserInfo() throws Exception {
 
         // perform a GET request to the customers page with the mock principal
-        mockMvc.perform(get("/keycloak/users").with(jwt().authorities(List.of(
-                                new SimpleGrantedAuthority("ROLE_USER")))
-                        .jwt(jwt -> jwt.claim(StandardClaimNames.PREFERRED_USERNAME, "user1"))))
+        mockMvc.perform(get("/keycloak/users/1e106f1c-f65e-48da-90a7-da6d8d0a4689").with(jwt().authorities(List.of(
+                                new SimpleGrantedAuthority("ROLE_ADMIN")))
+                        .jwt(jwt -> jwt.claim(StandardClaimNames.PREFERRED_USERNAME, "admin"))))
                 .andExpect(status().isOk());
     }
 }
