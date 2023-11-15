@@ -28,6 +28,11 @@ to create keycloak realms/roles/users:
 * go to the Users page and add one:username : user1 ,first name,last name,credentials->set password  
  ,role mappings->assign role user
 
+for realm admin creation:
+* create realm role: admin and assign realm-management roles needed
+* create user adminuser (username : adminuser ,first name,last name,credentials->set password ) 
+and assign the new realm roles:user,admin
+
 ## fetch token from keycloak admin POST
 
 `curl --location 'http://localhost:8080/realms/SpringBootKeycloak/protocol/openid-connect/token' \

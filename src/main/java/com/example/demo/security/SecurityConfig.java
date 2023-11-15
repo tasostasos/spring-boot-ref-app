@@ -1,7 +1,5 @@
 package com.example.demo.security;
 
-import com.example.demo.security.CustomJwtAuthenticationConverter;
-import com.example.demo.security.KeycloakLogoutHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,9 +11,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 /**
- * Security config for authenicating /customers/* endpoint with ROLE_USER(user realm role) and OIDC_USER(authentication
+ * Security config for authenticating /customers/* endpoint with ROLE_USER(user realm role) and OIDC_USER(authentication
  * via login page for user role) .
  * Permits unauthenticated root url.
+ * authenticating /keycloak/* endpoint with ROLE_ADMIN
  * Requires authentication for all other requests via oauth2-keycloak .
  * Enables keycloak login for authentication.
  * Adds oAuth2 filter for jwt Bearer token authentication.
@@ -28,17 +27,17 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain clientFilterChain(HttpSecurity http) throws Exception {
-        //permit unauthenticated root url
-        http.authorizeRequests()
-                .requestMatchers(new AntPathRequestMatcher("/"))
-                .permitAll();
 
         //authenticate via oauth2-keycloak all requests
         http.authorizeRequests()
-                .requestMatchers(new AntPathRequestMatcher("/customers*"))
+                .requestMatchers(new AntPathRequestMatcher("/"))
+                .permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/customers**"))
                 .hasAnyAuthority("ROLE_USER", "OIDC_USER")
-                .anyRequest()
-                .authenticated();
+                .requestMatchers(new AntPathRequestMatcher("/keycloak/**"))
+                .hasAnyAuthority("ROLE_ADMIN")
+                .anyRequest().authenticated();
+
 
         //enable keycloak login for authentication
         http.oauth2Login(Customizer.withDefaults())
@@ -46,6 +45,7 @@ public class SecurityConfig {
 
         //add oAuth2 filter for jwt Bearer token authentication
         http.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwtt -> jwtt.jwtAuthenticationConverter(new CustomJwtAuthenticationConverter())));
+
         return http.build();
     }
 

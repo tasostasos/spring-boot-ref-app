@@ -21,7 +21,7 @@ public class KafkaProducerService {
     private String topic;
 
     public void produce(KafkaMessageDTO message) {
-        log.info("message sent: {}", message);
         kafkaTemplate.send(topic, message);
+        log.info("message sent: {}", message);
     }
 }
