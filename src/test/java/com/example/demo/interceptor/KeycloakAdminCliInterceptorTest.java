@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class KeycloakAdminCliInterceptorTest {
     @InjectMocks
-    KeycloakAdminCliInterceptor keycloakAdminCliInterceptor;
+    KeycloakInterceptor keycloakAdminCliInterceptor;
 
     @Mock
     SecurityContext context;
@@ -54,7 +54,7 @@ class KeycloakAdminCliInterceptorTest {
     @Test
     void intercept() throws IOException {
         // Arrange
-        KeycloakAdminCliInterceptor interceptor = new KeycloakAdminCliInterceptor();
+        KeycloakInterceptor interceptor = new KeycloakInterceptor();
         when((jwt).getTokenValue()).thenReturn("token");
         try (MockedStatic<SecurityContextHolder> sHolder = Mockito.mockStatic(SecurityContextHolder.class)) {
             sHolder.when(() -> SecurityContextHolder.getContext()).thenReturn(context);

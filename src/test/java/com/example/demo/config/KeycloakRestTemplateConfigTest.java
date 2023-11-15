@@ -1,6 +1,6 @@
 package com.example.demo.config;
 
-import com.example.demo.interceptor.KeycloakAdminCliInterceptor;
+import com.example.demo.interceptor.KeycloakInterceptor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class KeycloakRestTemplateConfigTest {
 
     @Mock
-    private KeycloakAdminCliInterceptor keycloakAdminCliInterceptor;
+    private KeycloakInterceptor keycloakAdminCliInterceptor;
 
     @InjectMocks
     private KeycloakRestTemplateConfig keycloakRestTemplateConfig;
