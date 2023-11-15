@@ -17,7 +17,7 @@ import java.io.IOException;
  * {@link RestTemplate} requests as Authorization header(Bearer token).
  */
 @Component
-public class KeycloakAdminCliInterceptor implements ClientHttpRequestInterceptor {
+public class KeycloakInterceptor implements ClientHttpRequestInterceptor {
 
 
     @Override
