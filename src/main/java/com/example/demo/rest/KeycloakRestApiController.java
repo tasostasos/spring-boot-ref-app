@@ -28,4 +28,5 @@ public class KeycloakRestApiController {
         ResponseEntity<User[]> response = keycloakRestTemplate.getForEntity(keycloakRestUrl + endpoint, User[].class);
         return response;
     }
+
 }

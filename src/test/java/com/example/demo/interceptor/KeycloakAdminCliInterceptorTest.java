@@ -1,25 +1,29 @@
 package com.example.demo.interceptor;
 
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpResponse;
-import org.springframework.test.util.ReflectionTestUtils;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 
 import java.io.IOException;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class KeycloakAdminCliInterceptorTest {
@@ -27,7 +31,13 @@ class KeycloakAdminCliInterceptorTest {
     KeycloakAdminCliInterceptor keycloakAdminCliInterceptor;
 
     @Mock
-    RestTemplate restTemplate;
+    SecurityContext context;
+
+    @Mock
+    Authentication authentication;
+
+    @Mock
+    HttpHeaders httpHeaders;
 
     @Mock
     HttpRequest request;
@@ -35,31 +45,28 @@ class KeycloakAdminCliInterceptorTest {
     @Mock
     ClientHttpRequestExecution execution;
 
-    @BeforeEach
-    void setup() {
-        ReflectionTestUtils.setField(keycloakAdminCliInterceptor, "tokenUrl", "tokenUrl");
-        ReflectionTestUtils.setField(keycloakAdminCliInterceptor, "clientId", "clientId");
-        ReflectionTestUtils.setField(keycloakAdminCliInterceptor, "username", "username");
-        ReflectionTestUtils.setField(keycloakAdminCliInterceptor, "password", "password");
-    }
+    @Mock
+    ClientHttpResponse response;
+
+    @Mock
+    Jwt jwt;
 
     @Test
     void intercept() throws IOException {
-        ClientHttpResponse mockResponse = mock(ClientHttpResponse.class);
-        when(execution.execute(any(HttpRequest.class), any(byte[].class))).thenReturn(mockResponse);// Create a mock ResponseEntity object
-        ResponseEntity<Map> mockResponseEntity = mock(ResponseEntity.class);
-        Map mockMap = mock(Map.class);
-        when(mockResponseEntity.getBody()).thenReturn(mockMap);
-        when(mockMap.get("access_token")).thenReturn("mockToken");
-        when(restTemplate.exchange(anyString(), any(HttpMethod.class), any(HttpEntity.class), eq(Map.class))).thenReturn(mockResponseEntity);
-        HttpHeaders mockHeaders = mock(HttpHeaders.class);
-        when(request.getHeaders()).thenReturn(mockHeaders);
-        ClientHttpResponse response = keycloakAdminCliInterceptor.intercept(request, "".getBytes(), execution);
-
-        verify(restTemplate, times(1)).exchange(anyString(), eq(HttpMethod.POST), any(HttpEntity.class), eq(Map.class));
-        verify(mockResponseEntity, times(1)).getBody();
-        verify(mockMap, times(1)).get("access_token");
-        verify(mockHeaders, times(1)).add("Authorization", "Bearer mockToken");
-        assertEquals(mockResponse, response);
+        // Arrange
+        KeycloakAdminCliInterceptor interceptor = new KeycloakAdminCliInterceptor();
+        when((jwt).getTokenValue()).thenReturn("token");
+        try (MockedStatic<SecurityContextHolder> sHolder = Mockito.mockStatic(SecurityContextHolder.class)) {
+            sHolder.when(() -> SecurityContextHolder.getContext()).thenReturn(context);
+            when(context.getAuthentication()).thenReturn(authentication);
+            when(authentication.getPrincipal()).thenReturn(jwt);
+            when(execution.execute(any(), any())).thenReturn(response);
+            when(request.getHeaders()).thenReturn(httpHeaders);
+            ClientHttpResponse actual = interceptor.intercept(request, new byte[0], execution);
+            assertEquals(response, actual);
+        }
+        verify(request).getHeaders();
+        verify(request.getHeaders()).add(eq("Authorization"), eq("Bearer token"));
+        verify(execution).execute(any(), any());
     }
 }

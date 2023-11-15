@@ -20,7 +20,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "",
+											"value": "<token>",
 											"type": "string"
 										}
 									]
@@ -29,7 +29,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"key\":\"test2\",\r\n    \"value\":\"test2V\"\r\n}",
+									"raw": "{\r\n    \"key\":\"test2\",\r\n    \"value\":\"test2Vy\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -63,7 +63,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "",
+											"value": "<token>",
 											"type": "string"
 										}
 									]
@@ -72,7 +72,7 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "Bearer ",
+										"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICItRzZ1M25ub2tQTGQ3YVpMQTNlTDRlQXlEc1RrTjE2QndKZXpqdEtKNElzIn0.eyJleHAiOjE2OTkwMDc2MjMsImlhdCI6MTY5OTAwNzMyMywianRpIjoiNzI3ZGUzYTctYTEzZS00M2Y0LWEwYzctYjQ1OTBhZjMwM2MwIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9TcHJpbmdCb290S2V5Y2xvYWsiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiZGNhMGY2ZmItNGI1OS00ZjAxLTg2YmEtMDk0NDIzMjQxZmU2IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibG9naW4tYXBwIiwic2Vzc2lvbl9zdGF0ZSI6ImY5Y2ZiNjEwLTJlMDAtNDNlNy1hYmJkLTQzMTYwYjQ2NzY3MCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiaHR0cDovL2xvY2FsaG9zdDo4MDgxIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsImRlZmF1bHQtcm9sZXMtc3ByaW5nYm9vdGtleWNsb2FrIiwidW1hX2F1dGhvcml6YXRpb24iLCJ1c2VyIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwic2lkIjoiZjljZmI2MTAtMmUwMC00M2U3LWFiYmQtNDMxNjBiNDY3NjcwIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJBbmFzdGFzaW9zIEthbGFtYXRhcyIsInByZWZlcnJlZF91c2VybmFtZSI6InVzZXIxIiwiZ2l2ZW5fbmFtZSI6IkFuYXN0YXNpb3MiLCJmYW1pbHlfbmFtZSI6IkthbGFtYXRhcyIsImVtYWlsIjoiYW5hc3Rhc2lvcy5rYWxhbWF0YXNAc3dvcmQtZ3JvdXAuY29tIn0.WxBYdN4dr1PWoo0CIsaDVpqSs_AJHDwoo7iwVPODGU3XhQquebO4ojDD3Ep4K117L3OYvmBnV9SkLlovRe-P0eY3Yqjp4kjaaJ68S6pgWoH-zol5A7nNaj2k-TVwLXkOvmf_urwkNTGFP8k1VcwYxoOpnr2xg6ZHOUz7abEj4_JDd9FoyYltqCHJ9qInFN7jhb14QpO_iW-ZQa7oCCSBRQhzqL_cABWxFPzzs8kbqIPsUPsgkSbD6ZOLC073QR0dzxRJMVRTT72qd8d4CEdPtqo9g4oikvVbxjNdpFHiSDVjKPzoH3aukr2FQS1p4HCgaB2b1JrDHVpZMncLG1ydUA\",\n    \"expires_in\": 300,\n    \"refresh_expires_in\": 1800,\n    \"refresh_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJlZDdjN2IzNy1lYWI2LTQ3NDctYjcyMS01YzI4ZDk2OGZjMzAifQ.eyJleHAiOjE2OTkwMDkxMjMsImlhdCI6MTY5OTAwNzMyMywianRpIjoiMTYyZTEyNjUtMTdlZi00MzllLWJmYmEtYTJkM2RkNzdkZDQ1IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9TcHJpbmdCb290S2V5Y2xvYWsiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvcmVhbG1zL1NwcmluZ0Jvb3RLZXljbG9hayIsInN1YiI6ImRjYTBmNmZiLTRiNTktNGYwMS04NmJhLTA5NDQyMzI0MWZlNiIsInR5cCI6IlJlZnJlc2giLCJhenAiOiJsb2dpbi1hcHAiLCJzZXNzaW9uX3N0YXRlIjoiZjljZmI2MTAtMmUwMC00M2U3LWFiYmQtNDMxNjBiNDY3NjcwIiwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwic2lkIjoiZjljZmI2MTAtMmUwMC00M2U3LWFiYmQtNDMxNjBiNDY3NjcwIn0.vbOfSKvrvjeAxAL8koqYLyheLYZ7ZZeF_cVXYLusxRs",
 										"type": "text",
 										"disabled": true
 									}
@@ -97,14 +97,14 @@
 					"name": "keycloak rest api controller",
 					"item": [
 						{
-							"name": "admin-cli call",
+							"name": "rest api keycloak call",
 							"request": {
 								"auth": {
 									"type": "bearer",
 									"bearer": [
 										{
 											"key": "token",
-											"value": "",
+											"value": "<token>",
 											"type": "string"
 										}
 									]
@@ -231,6 +231,54 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "keycloak realm admin get token",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "client_id",
+											"value": "login-app",
+											"type": "text"
+										},
+										{
+											"key": "username",
+											"value": "adminuser",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "adminuser",
+											"type": "text"
+										},
+										{
+											"key": "grant_type",
+											"value": "password",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8080/realms/SpringBootKeycloak/protocol/openid-connect/token",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"realms",
+										"SpringBootKeycloak",
+										"protocol",
+										"openid-connect",
+										"token"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -245,7 +293,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "",
+											"value": "<token>",
 											"type": "string"
 										}
 									]
