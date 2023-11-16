@@ -5,6 +5,8 @@ import com.example.demo.entity.Customer;
 import com.example.demo.repository.CustomerRepository;
 import com.example.demo.kafka.KafkaProducerService;
 import javax.servlet.http.HttpServletRequest;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -74,6 +76,7 @@ public class CustomerController {
      * @return
      */
     @GetMapping(path = "/customers-jwt")
+    @SecurityRequirement(name = "bearerAuth")
     public String customersJwt(Principal principal, Model model) {
         Jwt user = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Map<String, Object> customClaims = user.getClaims();

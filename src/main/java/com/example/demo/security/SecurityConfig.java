@@ -31,8 +31,10 @@ public class SecurityConfig {
         //authenticate via oauth2-keycloak all requests
         http.authorizeRequests()
                 .requestMatchers(new AntPathRequestMatcher("/"),
-                        new AntPathRequestMatcher("/v3/api-docs/**"),
+                        new AntPathRequestMatcher("/v2/**"),
                         new AntPathRequestMatcher("/swagger-ui/**"),
+                        new AntPathRequestMatcher("/webjars/**"),
+                        new AntPathRequestMatcher("/swagger-resources/**"),
                         new AntPathRequestMatcher("/"))
                 .permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/customers**"))
