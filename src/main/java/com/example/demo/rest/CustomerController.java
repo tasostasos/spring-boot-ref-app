@@ -4,7 +4,7 @@ import com.example.demo.dto.KafkaMessageDTO;
 import com.example.demo.entity.Customer;
 import com.example.demo.repository.CustomerRepository;
 import com.example.demo.kafka.KafkaProducerService;
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
